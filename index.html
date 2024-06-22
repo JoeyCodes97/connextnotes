@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trexconnect Notes v1.1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Arimo', sans-serif;
+            font-size: 16px;
+            color: #333333;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(circle, rgba(226, 226, 226, 1) 0%, rgba(255, 255, 255, 1) 100%);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Trextel Notes</h1>
+        <form id="trexNotes">
+            <div class="form-group">
+                <label for="startTroubleshooting">Start Troubleshooting Time</label>
+                <input type="datetime-local" id="startTroubleshooting" name="Start Troubleshooting" required>
+            </div>
+            <div class="form-group">
+                <label for="site">Site ID</label>
+                <input id="site" name="Site" type="text" required>
+            </div>
+            <div class="form-group">
+                <label for="tech">Technician</label>
+                <input id="tech" name="Technician" type="text" required>
+            </div>
+            <div class="form-group">
+                <label for="scope">Scope of work</label>
+                <textarea id="scope" name="Scope of work" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="manager">Manager</label>
+                <input type="text" id="manager" name="Manager" required>
+            </div>
+            <div class="form-group">
+                <label for="support">Customer</label>
+                <select id="support" name="Support" required>
+                    <option value="">Select a customer</option>
+                    <option value="Tailored Brands">Tailored Brands</option>
+                    <option value="Dollar Tree">Dollar Tree</option>
+                    <option value="Family Dollar">Family Dollar</option>
+                    <option value="Select Management">Select Management</option>
+                    <option value="Wendys">Wendys</option>
+                    <option value="Lowes">Lowes</option>
+                    <option value="Luxottica">Luxottica</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="storenumber">Store Phone Number</label>
+                <input type="tel" id="storenumber" name="Store Number" required>
+            </div>
+            <div class="form-group">
+                <label for="endTroubleshooting">End Troubleshooting Time</label>
+                <input type="datetime-local" id="endTroubleshooting" name="End Troubleshooting Time" required>
+            </div>
+            <button type="submit" id="submit">Submit</button>
+        </form>
+    </div>
+    <div id="result" class="hidden">
+        <h2>Submitted Information</h2>
+        <div id="resultContent"></div>
+        <button id="returnButton">Return to Form</button>
+    </div>
+
+    <script>
+        const form = document.getElementById('trexNotes');
+        const result = document.getElementById('result');
+        const resultContent = document.getElementById('resultContent');
+        const returnButton = document.getElementById('returnButton');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const data = new FormData(this);
+            let output = '';
+
+            for (const [key, value] of data.entries()) {
+                if (value) {
+                    output += `<p><strong>${key}:</strong> ${value}</p>`;
+                }
+            }
+
+            resultContent.innerHTML = output;
+            form.style.display = 'none';
+            result.classList.remove('hidden');
+        });
+
+        returnButton.addEventListener('click', function () {
+            form.style.display = 'block';
+            result.classList.add('hidden');
+            form.reset();
+        });
+    </script>
+</body>
+
+</html>
